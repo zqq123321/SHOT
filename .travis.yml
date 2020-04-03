@@ -12,35 +12,35 @@ addons:
 
 matrix:
   include:
-    - os: linux
-      dist: bionic
-      compiler: gcc
+    # - os: linux
+    #   dist: bionic
+    #   compiler: gcc
 
-    - os: linux
-      dist: bionic
-      compiler: clang
-
-    - os: osx
-      osx_image: xcode11
-      env: OSX=10.14
-      compiler: gcc
+    # - os: linux
+    #   dist: bionic
+    #   compiler: clang
 
     - os: osx
       osx_image: xcode11
       env: OSX=10.14
-      compiler: clang
+      compiler: gcc
+
+    # - os: osx
+    #   osx_image: xcode11
+    #   env: OSX=10.14
+    #   compiler: clang
 
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then if [ x`brew list | fgrep bash` != x'bash' ]; then brew install bash; fi; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then if [ x`brew list | fgrep gcc` != x'gcc' ]; then brew install gcc; fi; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --overwrite gcc; fi
   - git clone https://github.com/coin-or/coinbrew
   - cd coinbrew
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Ipopt
-  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=3 --parallel-jobs=5
+  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=5 --parallel-jobs=5
   - bash ./coinbrew install Ipopt --debug
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -R build; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm build -rf; fi
+  - rm -rf build
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
   - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=3 --parallel-jobs=5
   - bash ./coinbrew install Cbc --debug
