@@ -37,15 +37,15 @@ before_script:
   - git clone https://github.com/coin-or/coinbrew
   - cd coinbrew
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Ipopt
-  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none
+  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=3 --parallel-jobs=5
   - bash ./coinbrew install Ipopt --debug
   - rm build -rf
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
-  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none
+  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=3 --parallel-jobs=5
   - bash ./coinbrew install Cbc --debug
   - mkdir $HOME/build/coin-or/SHOT/build
   - cd $HOME/build/coin-or/SHOT/build
-  - cmake .. -DCBC_DIR=$HOME/build/coin-or/SHOT/ThirdParty/Cbc -DIPOPT_DIR=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt -DHAS_GAMS=off -DHAS_CPLEX=off -DHAS_GUROBI=off -DCOMPILE_TESTS=on -DSPDLOG_STATIC=off
+  - cmake .. -DCBC_DIR=$HOME/build/coin-or/SHOT/ThirdParty/Cbc -DIPOPT_DIR=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt -DHAS_GAMS=off -DHAS_CPLEX=off -DHAS_GUROBI=off -DCOMPILE_TESTS=on
 
 script:
   - make -j5
