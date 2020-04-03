@@ -42,7 +42,7 @@ before_script:
   - bash ./coinbrew install Ipopt --debug
   - rm -rf build
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
-  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=3 --parallel-jobs=5
+  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=5 --parallel-jobs=5
   - bash ./coinbrew install Cbc --debug
   - mkdir $HOME/build/coin-or/SHOT/build
   - cd $HOME/build/coin-or/SHOT/build
