@@ -39,7 +39,8 @@ before_script:
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Ipopt
   - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=3 --parallel-jobs=5
   - bash ./coinbrew install Ipopt --debug
-  - rm build -rf
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm -R build; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm build -rf; fi
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
   - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=3 --parallel-jobs=5
   - bash ./coinbrew install Cbc --debug
