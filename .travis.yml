@@ -19,7 +19,7 @@ matrix:
 
     - os: osx
       osx_image: xcode11
-      env: OSX=10.14
+      env: OSX=10.15
       compiler: gcc
       
 before_script:
