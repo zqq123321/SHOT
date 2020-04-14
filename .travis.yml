@@ -38,7 +38,7 @@ before_script:
   - rm -R $PWD/buildcbc
   - mkdir $PWD/buildcbc
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
-  - bash ./coinbrew build install Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=5 --parallel-jobs=5 --build-dir=$PWD/buildcbc
+  - bash ./coinbrew build install Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=5 --build-dir=$PWD/buildcbc
 #  - bash ./coinbrew install Cbc --debug
   - mkdir $HOME/build/coin-or/SHOT/build
   - cd $HOME/build/coin-or/SHOT/build
