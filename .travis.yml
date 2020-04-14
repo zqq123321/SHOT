@@ -6,9 +6,6 @@ addons:
     packages:
       - gfortran
       - liblapack-dev
-  brew:
-    packages:
-      - ccache
 
 matrix:
   include:
@@ -30,11 +27,13 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then if [ x`brew list | fgrep bash` != x'bash' ]; then brew install bash; fi; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then if [ x`brew list | fgrep gcc` != x'gcc' ]; then brew install gcc; fi; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link --overwrite gcc; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install ccache; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi
   - git clone https://github.com/coin-or/coinbrew
   - cd coinbrew
   - mkdir $PWD/buildipopt
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Ipopt
-  - bash ./coinbrew build install Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=3 --parallel-jobs=5 --build-dir=$PWD/buildipopt
+  - bash ./coinbrew build install Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=5 --parallel-jobs=5 --build-dir=$PWD/buildipopt
   #- bash ./coinbrew install Ipopt --debug
   - mkdir $PWD/buildcbc
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
