@@ -33,10 +33,10 @@ before_script:
   - git clone https://github.com/coin-or/coinbrew
   - cd coinbrew
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Ipopt
-  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --skip='ThirdParty/ASL' --no-prompt --tests none --verbosity=5 --parallel-jobs=5 --build-dir=build_ipopt
+  - bash ./coinbrew build Ipopt:stable/3.13 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Ipopt --no-prompt --tests none --verbosity=5 --parallel-jobs=5 --build-dir=$HOME/ipopt_build/
   - bash ./coinbrew install Ipopt --debug
   - mkdir $HOME/build/coin-or/SHOT/ThirdParty/Cbc
-  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=5   --build-dir=build_cbc
+  - bash ./coinbrew build Cbc:stable/2.10 --prefix=$HOME/build/coin-or/SHOT/ThirdParty/Cbc --no-prompt --tests none --verbosity=5   --build-dir=$HOME/cbc_build/
   - bash ./coinbrew install Cbc --debug
   - mkdir $HOME/build/coin-or/SHOT/build
   - cd $HOME/build/coin-or/SHOT/build
