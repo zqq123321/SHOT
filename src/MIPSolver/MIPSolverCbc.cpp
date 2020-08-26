@@ -231,7 +231,9 @@ bool MIPSolverCbc::finalizeProblem()
     {
         osiInterface->loadFromCoinModel(*coinModel);
         cbcModel = std::make_unique<CbcModel>(*osiInterface);
-        CbcMain0(*cbcModel);
+
+        CbcSolverUsefulData solverData;
+        CbcMain0(*cbcModel, solverData);
 
         if(!env->settings->getSetting<bool>("Console.DualSolver.Show", "Output"))
         {
@@ -568,7 +570,8 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
             env->output->outputError("        Error when adding MIP start to Cbc", e.what());
         }
 
-        CbcMain0(*cbcModel);
+        CbcSolverUsefulData solverData;
+        CbcMain0(*cbcModel, solverData);
 
         if(!env->settings->getSetting<bool>("Console.DualSolver.Show", "Output"))
         {
@@ -576,7 +579,7 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
             osiInterface->setHintParam(OsiDoReducePrint, false, OsiHintTry);
         }
 
-        CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel);
+        CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel, solverData);
 
         MIPSolutionStatus = getSolutionStatus();
     }
@@ -598,7 +601,8 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
 
             initializeSolverSettings();
 
-            CbcMain0(*cbcModel);
+            CbcSolverUsefulData solverData;
+            CbcMain0(*cbcModel, solverData);
 
             if(!env->settings->getSetting<bool>("Console.DualSolver.Show", "Output"))
             {
@@ -606,7 +610,7 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
                 osiInterface->setHintParam(OsiDoReducePrint, false, OsiHintTry);
             }
 
-            CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel);
+            CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel, solverData);
 
             MIPSolutionStatus = getSolutionStatus();
 
@@ -626,9 +630,9 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
                && std::dynamic_pointer_cast<LinearObjectiveFunction>(env->reformulatedProblem->objectiveFunction)
                       ->isDualUnbounded())
             || (env->reformulatedProblem->objectiveFunction->properties.classification
-                       == E_ObjectiveFunctionClassification::Quadratic
-                   && std::dynamic_pointer_cast<QuadraticObjectiveFunction>(env->reformulatedProblem->objectiveFunction)
-                          ->isDualUnbounded()))
+                    == E_ObjectiveFunctionClassification::Quadratic
+                && std::dynamic_pointer_cast<QuadraticObjectiveFunction>(env->reformulatedProblem->objectiveFunction)
+                       ->isDualUnbounded()))
         {
             for(auto& V : env->reformulatedProblem->allVariables)
             {
@@ -676,7 +680,8 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
 
             initializeSolverSettings();
 
-            CbcMain0(*cbcModel);
+            CbcSolverUsefulData solverData;
+            CbcMain0(*cbcModel, solverData);
 
             if(!env->settings->getSetting<bool>("Console.DualSolver.Show", "Output"))
             {
@@ -684,7 +689,7 @@ E_ProblemSolutionStatus MIPSolverCbc::solveProblem()
                 osiInterface->setHintParam(OsiDoReducePrint, false, OsiHintTry);
             }
 
-            CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel);
+            CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel, solverData);
 
             MIPSolutionStatus = getSolutionStatus();
 
@@ -799,7 +804,8 @@ bool MIPSolverCbc::repairInfeasibility()
 
         initializeSolverSettings();
 
-        CbcMain0(*cbcModel);
+        CbcSolverUsefulData solverData;
+        CbcMain0(*cbcModel, solverData);
 
         if(!env->settings->getSetting<bool>("Console.DualSolver.Show", "Output"))
         {
@@ -930,7 +936,7 @@ bool MIPSolverCbc::repairInfeasibility()
             argv[16] = strdup("");
         }
 
-        CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel);
+        CbcMain1(numArguments, const_cast<const char**>(argv), *cbcModel, solverData);
 
         for(int i = numArguments - 1; i >= 0; --i)
             free(argv[i]);
